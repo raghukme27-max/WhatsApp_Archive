@@ -2,6 +2,60 @@
 
 This project implements a small, production-oriented WhatsApp archive pipeline for document and image intake. It is intended for Windows or macOS deployment and remains portable by relying on configuration rather than machine-specific paths.
 
+## Quick Start (for beginners)
+
+### What this project does
+It receives documents and images sent to your WhatsApp business number, downloads them automatically, and saves them into dated folders on your computer. It also keeps track of which messages it has already processed so nothing gets saved twice.
+
+### What you need
+- A computer (Windows 10/11 or macOS)
+- Python 3.11 or newer installed
+- A WhatsApp Business account with access to the WhatsApp Cloud API (Meta developer portal)
+- About 15 minutes to set up
+
+### Step 1: Get the project files
+If you have Git installed:
+```bash
+git clone https://github.com/raghukme27-max/WhatsApp_Archive.git
+cd WhatsApp_Archive
+```
+
+If you don't have Git, download the ZIP file from GitHub and unzip it, then open your terminal/command prompt in that folder.
+
+### Step 2: Create your configuration file
+Copy the example configuration file:
+```bash
+cp .env.example .env
+```
+
+Open `.env` in a text editor and fill in these values:
+- `WHATSAPP_ACCESS_TOKEN`: Get this from the Meta developer portal (your WhatsApp app → Settings → Tokens)
+- `WHATSAPP_VERIFY_TOKEN`: Make up any secret word (for example, `my-whatsapp-secret-123`)
+- `ARCHIVE_PATH`: Where you want saved files to go (leave default, or set a folder like `C:\EducationalArchive`)
+
+Save the file and close it.
+
+### Step 3: Run in test mode (safe, no real messages)
+```bash
+LOCAL_DEV_MODE=true python -m whatsapp_archive
+```
+
+You should see `Listening on 127.0.0.1:8000`. Open `http://127.0.0.1:8000/health` in your browser — you should see `{"status": "ok"}`. Press `Ctrl+C` to stop.
+
+### Step 4: Connect WhatsApp (real usage)
+1. Go to the Meta developer portal and create a WhatsApp app
+2. Add the WhatsApp product and get your access token and phone number ID
+3. Set your webhook URL to `https://your-server.com/webhook` and your verify token to match `.env`
+4. Update `.env` with your real tokens and set `LOCAL_DEV_MODE=false`
+5. Run `python -m whatsapp_archive` again
+
+### Step 5: Run the tests
+```bash
+python -m unittest discover -s tests
+```
+
+You should see all tests pass.
+
 ## Features
 
 - Receives WhatsApp Cloud API webhook events
