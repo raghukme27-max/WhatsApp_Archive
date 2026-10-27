@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "whatsapp-archive"
+version = "0.1.0"
+description = "WhatsApp document ingestion and archival helper"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "WhatsApp Archive Maintainer" }]
+license = { text = "MIT" }
+dependencies = []
+
+[tool.setuptools]
+packages = ["whatsapp_archive"]
